@@ -1,0 +1,27 @@
+package com.aurionpro.main.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aurionpro.main.Service.AdminService;
+import com.aurionpro.main.entity.Admin;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/bankapp")
+public class AdminController {
+
+	@Autowired
+	private AdminService adminService;
+	
+	@PostMapping("/admins")
+	public ResponseEntity<Admin> addAdmin(@Valid @RequestParam String adminName ,@RequestParam String password)
+	{
+		return ResponseEntity.ok(adminService.addAdmin(adminName, password));
+	}
+}

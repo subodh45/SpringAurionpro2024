@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;com.aurionpro.main.exception&apos; to &apos;P21-BankApp/src/main/java/com.aurionpro.main&apos;&#x0D;&#x0A;- Original project: &apos;P10_Mapping-OnetoOne&apos;&#x0D;&#x0A;- Destination element: &apos;P21-BankApp/src/main/java/com.aurionpro.main&apos;&#x0D;&#x0A;- Original element: &apos;P10_Mapping-OnetoOne/src/main/java/com.aurionpro.main.exception&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=P21-BankApp/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.aurionpro.main" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.aurionpro.main.exception" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1724956235277" version="1.0"/>
+</session>

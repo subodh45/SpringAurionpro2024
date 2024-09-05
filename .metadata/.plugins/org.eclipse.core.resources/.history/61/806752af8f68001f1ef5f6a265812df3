@@ -1,0 +1,21 @@
+package com.aurionpro.main.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Entity
+@Table(name="admins")
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class Admin {
+
+	private int adminId;
+	
+	private String adminName;
+	
+	private String password;
+}

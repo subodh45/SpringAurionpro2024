@@ -1,0 +1,23 @@
+package com.aurionpro.main.Service;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.aurionpro.main.dto.AccountDto;
+import com.aurionpro.main.dto.TransactionDto;
+
+public interface AccountService {
+
+	AccountDto addAccount(AccountDto accounDto); 
+	
+	List<AccountDto> getAllAccounts();
+	
+	AccountDto getAccountbyAccountNumber(long accountNumber);
+	
+	List<TransactionDto> getAccountTransaction(long accountNumber);
+	
+	 Page<TransactionDto> getAccountTransaction(long accountNumber, int pageNumber, int pageSize);
+		
+}

@@ -1,0 +1,15 @@
+package com.aurionpro.main.exception;
+
+import org.springframework.http.HttpStatus;
+
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@AllArgsConstructor
+@RequiredArgsConstructor
+@data
+public class UserApiException extends RuntimeException{
+
+	private HttpStatus status;
+	private String message ;
+}

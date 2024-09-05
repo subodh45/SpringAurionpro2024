@@ -1,0 +1,7 @@
+package com.aurionpro.main.dto;
+
+public class logindto {
+
+	private String username;
+	private String password;
+}

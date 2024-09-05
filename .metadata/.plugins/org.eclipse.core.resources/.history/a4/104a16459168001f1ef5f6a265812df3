@@ -1,0 +1,6 @@
+package com.aurionpro.main.Service;
+
+public interface AdminService {
+
+	Admin addAdmin(String adminName, String password);
+}

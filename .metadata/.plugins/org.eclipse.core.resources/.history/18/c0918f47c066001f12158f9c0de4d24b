@@ -1,0 +1,56 @@
+package com.aurionpro.main.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.aurionpro.main.Repository.RoleRepository;
+import com.aurionpro.main.Repository.UserRepository;
+import com.aurionpro.main.dto.logindto;
+import com.aurionpro.main.dto.registrationdto;
+import com.aurionpro.main.entity.Role;
+import com.aurionpro.main.entity.User;
+import com.aurionpro.main.exception.UserApiException;
+import com.aurionpro.main.security.JwtTokenProvider;
+
+public class AuthServiceImpl implements AuthService{
+
+	@Autowired
+	private AuthenticationManager  authenticationManager;	
+	@Autowired
+	private UserRepository userRepo;
+	@Autowired
+	private RoleRepository roleRepo;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+	
+	@Override
+	public User register(registrationdto registrationDto) {
+		
+		if(userRepo.existsByUsername(registrationDto.getUsername()))
+			throw new UserApiException(HttpStatus.BAD_REQUEST,"username Already exist.");
+		
+		User user = new User();
+		
+		user.setUsername(registrationDto.getUsername());
+		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+		
+		List<Role> roles = new ArrayList<Role>();
+		
+		Role userRole = roleRepo.findByRolename(registrationDto.getRole());
+		return null;
+	}
+
+	@Override
+	public String login(logindto loginDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

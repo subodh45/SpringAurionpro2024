@@ -1,0 +1,14 @@
+package com.aurionpro.main.Repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.aurionpro.main.entity.Account;
+
+public interface AccountRepository extends JpaRepository<Account, Integer> {
+
+	Account findByAccountNumber(int accountNumber);
+
+	Optional<Account> findById(long accountNumber);
+}

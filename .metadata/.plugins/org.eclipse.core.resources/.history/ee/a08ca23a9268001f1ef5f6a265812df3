@@ -1,0 +1,15 @@
+package com.aurionpro.main.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aurionpro.main.Service.AdminService;
+
+@RestController
+@RequestMapping("/bankapp")
+public class AdminController {
+
+	@Autowired
+	private AdminService adminService;
+}

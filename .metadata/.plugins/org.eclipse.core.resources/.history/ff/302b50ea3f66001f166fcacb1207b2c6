@@ -1,0 +1,16 @@
+package com.aurionpro.main.Service;
+
+import java.util.List;
+
+import com.aurionpro.main.dto.CustomerDto;
+
+public interface CustomerService {
+
+	CustomerDto addCustomerDto(CustomerDto customerDto);
+	
+	List<CustomerDto> getAllCustomerDto();
+	
+	CustomerDto getCustomerbyEmail(String email);
+	
+	CustomerDto updateCustomer(CustomerDto customerDto);
+}

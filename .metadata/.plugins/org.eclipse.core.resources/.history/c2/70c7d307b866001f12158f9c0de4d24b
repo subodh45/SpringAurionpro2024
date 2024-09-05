@@ -1,0 +1,15 @@
+package com.aurionpro.main.security;
+
+import org.springframework.stereotype.Component;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Component
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Data
+public class JwtAuthenticationFilter {
+
+}

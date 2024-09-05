@@ -1,0 +1,12 @@
+package com.aurionpro.main.Service;
+
+import java.time.LocalDate;
+
+import com.aurionpro.main.entity.Transaction;
+import com.aurionpro.main.entity.TransactionType;
+
+public interface TransactionService {
+
+	Transaction performTransaction(long senderAccountNumber,long receiverAccountNumber, TransactionType transactionType, int amount);
+	
+}

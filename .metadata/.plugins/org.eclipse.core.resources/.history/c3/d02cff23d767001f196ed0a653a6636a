@@ -1,0 +1,75 @@
+package com.aurionpro.main.Service;
+
+import java.time.LocalDate;
+
+import java.time.LocalDate;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aurionpro.main.Repository.AccountRepository;
+import com.aurionpro.main.Repository.TransactionRepository;
+import com.aurionpro.main.entity.Account;
+import com.aurionpro.main.entity.Transaction;
+import com.aurionpro.main.entity.TransactionType;
+import com.aurionpro.main.exception.InsufficientBalanceException;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class TransactionServiceImpl implements TransactionService{
+
+	@Autowired
+	private TransactionRepository transactionRepo;
+	
+	
+	@Autowired 
+	private AccountRepository accountRepo;
+	
+	
+	@Override
+	public Transaction performTransaction(long senderAccountNumber, long receiverAccountNumber,
+			TransactionType transactionType, int amount) {
+		if(transactionType.equals("CREDIT"))
+			return withdrawAmount(senderAccountNumber, receiverAccountNumber, transactionType, amount);
+		return null; 
+	}
+	
+	@Transactional
+	public Transaction withdrawAmount(long senderAccountNumber, long receiverAccountNumber,
+			TransactionType transactionType, int amount)
+	{     AccountServiceImpl accountServiceImpl = new AccountServiceImpl();
+		 
+		 Account fromAccount =  accountRepo.findById(senderAccountNumber)
+				 .orElseThrow(()-> new com.aurionpro.main.exception.AccountNotFoundException("Sender account is invalid."));
+		 
+		 if(fromAccount.getBalance()<amount)
+			 throw new InsufficientBalanceException("insufficient Balance.");
+		 
+		 fromAccount.setBalance(fromAccount.getBalance()-amount);
+		 Account updatedAccount = accountRepo.save(fromAccount);
+		 
+		 LocalDate date = LocalDate.now();
+		 
+		Transaction transaction= addTransaction( senderAccountNumber, receiverAccountNumber, transactionType,  date,amount ,updatedAccount);
+		 
+		return transaction;
+	}
+
+	private Transaction addTransaction(long senderAccountNumber, long receiverAccountNumber, TransactionType transactionType,
+			LocalDate date, int amount, Account updatedAccount) {
+		
+	      Transaction transaction = new Transaction();
+	      transaction.setAccount(updatedAccount);
+	      transaction.setAmount(amount);
+	      transaction.setDate(date);
+	      transaction.setReceiverAccountNumber(receiverAccountNumber);
+	      transaction.setSenderAccountNumber(senderAccountNumber);
+	      transaction.setTransactionType(transactionType);
+	      
+	      transaction = transactionRepo.save(transaction);
+	
+	      return transaction;
+	}
+
+}

@@ -1,0 +1,59 @@
+package com.aurionpro.main.service;
+
+import java.io.File;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+import jakarta.mail.internet.MimeMessage;
+
+@Service
+public class EmailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    // Send simple email (without attachment)
+    public void sendSimpleEmail(String toEmail, String subject, String body) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("subodhmagar45@gmail.com");
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(body);
+
+            mailSender.send(message);
+            System.out.println("Simple mail sent successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Send email with attachment
+    public void sendEmailWithAttachment(String toEmail, String subject, String body, String attachmentPath) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("your-email@gmail.com");
+            helper.setTo(toEmail);
+            helper.setSubject(subject);
+            helper.setText(body);
+
+            // Add the attachment
+            FileSystemResource file = new FileSystemResource(new File(attachmentPath));
+            helper.addAttachment(file.getFilename(), file);
+
+            mailSender.send(message);
+            System.out.println("Mail with attachment sent successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+

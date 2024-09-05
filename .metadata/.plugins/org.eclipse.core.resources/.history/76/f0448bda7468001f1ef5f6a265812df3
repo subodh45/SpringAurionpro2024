@@ -1,0 +1,18 @@
+package com.aurionpro.main.Service;
+
+import java.util.List;
+
+import com.aurionpro.main.dto.AccountDto;
+import com.aurionpro.main.dto.TransactionDto;
+
+public interface AccountService {
+
+	AccountDto addAccount(AccountDto accounDto); 
+	
+	List<AccountDto> getAllAccounts();
+	
+	AccountDto getAccountbyAccountNumber(long accountNumber);
+	
+	List<TransactionDto> getAccountTransaction(long accountNumber);
+		
+}

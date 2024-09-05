@@ -1,0 +1,38 @@
+package com.aurionpro.main.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aurionpro.main.service.EmailService;
+
+@RestController
+public class EmailController {
+
+    @Autowired
+    private EmailService emailService;
+
+ 
+    @GetMapping("/send-simple-email")
+    public String sendSimpleEmail(@RequestParam String toEmail,
+                                  @RequestParam String subject,
+                                  @RequestParam String body) {
+
+        emailService.sendSimpleEmail(toEmail, subject, body);
+        return "Simple email sent to " + toEmail;
+    }
+
+    // Endpoint for sending an email with attachment
+    @GetMapping("/send-email-with-attachment")
+    public String sendEmailWithAttachment(@RequestParam String toEmail,
+                                          @RequestParam String subject,
+                                          @RequestParam String body,
+                                          @RequestParam String attachmentPath) {
+
+        emailService.sendEmailWithAttachment(toEmail, subject, body, attachmentPath);
+        return "Email with attachment sent to " + toEmail;
+    }
+}
+

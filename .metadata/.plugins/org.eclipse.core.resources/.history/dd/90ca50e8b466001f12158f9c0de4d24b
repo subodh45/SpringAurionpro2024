@@ -1,0 +1,13 @@
+package com.aurionpro.main.security;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class JwtTokenProvider {
+
+	@Value("${ySeYx/bWebOloP8HY6xTlcqRexEDFPaSjG/+mcaT6jk=}")
+	private String jwtSecret;
+	
+	private long jwtExpirationDate;
+}

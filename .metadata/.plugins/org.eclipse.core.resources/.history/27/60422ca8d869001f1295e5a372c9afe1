@@ -1,0 +1,10 @@
+package com.aurionpro.main.Config;
+
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+@Configuration
+public class EmployeeBatchConfig {
+
+}

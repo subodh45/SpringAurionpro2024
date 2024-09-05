@@ -1,0 +1,15 @@
+package com.aurionpro.main.Service;
+
+import java.util.List;
+
+import com.aurionpro.main.dto.AccountDto;
+
+public interface AccountService {
+
+	AccountDto addAccount(AccountDto accounDto); 
+	
+	List<AccountDto> getAllAccounts();
+	
+	AccountDto getAccountDtobyAccountNumber(int AccountNumber);
+		
+}

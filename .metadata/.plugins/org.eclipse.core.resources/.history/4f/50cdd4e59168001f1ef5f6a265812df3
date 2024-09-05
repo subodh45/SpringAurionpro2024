@@ -1,0 +1,15 @@
+package com.aurionpro.main.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aurionpro.main.Repository.AdminRepository;
+
+@Service
+public class AdminServiceImpl implements AdminService{
+
+	@Autowired
+	private AdminRepository adminRepo;
+	
+	
+}

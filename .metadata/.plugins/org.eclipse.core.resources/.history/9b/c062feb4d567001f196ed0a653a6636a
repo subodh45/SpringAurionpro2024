@@ -1,0 +1,22 @@
+package com.aurionpro.main.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aurionpro.main.Service.TransactionService;
+
+@RestController
+@RequestMapping("/bankapp")
+public class TransactionController {
+
+	@Autowired
+	private TransactionService transactionService;
+	
+	
+	public ResponseEntity<Transaction> perfromTransaction()
+	{
+		return ResponseEntity.ok(transaction);
+	}
+}

@@ -1,0 +1,51 @@
+package com.aurionpro.main.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aurionpro.main.Repository.AdminRepository;
+import com.aurionpro.main.dto.AccountDto;
+import com.aurionpro.main.dto.TransactionDto;
+import com.aurionpro.main.entity.Admin;
+
+@Service
+public class AdminServiceImpl implements AdminService{
+
+	@Autowired
+	private AdminRepository adminRepo;
+	
+	TransactionServiceImpl transactionServiceImpl =null;
+	AccountServiceImpl  accountServiceImpl = null;
+
+	@Override
+	public Admin addAdmin(String adminName, String password) {
+		 Admin admin = new Admin();
+		 admin.setAdminName(adminName);
+		 admin.setPassword(password);
+		admin = adminRepo.save(admin);
+		
+		return admin;	
+	}
+
+	//get All Transaction
+	@Override
+	public List<TransactionDto> getAllTransaction() {
+		transactionServiceImpl = new TransactionServiceImpl(); 	
+		return transactionServiceImpl.getAllTransactions();
+	}
+
+	//Generate New Account of Customer 
+	@Override
+	public AccountDto addAccount(AccountDto accounDto) {
+		accountServiceImpl = new AccountServiceImpl(); 
+		return accountServiceImpl.addAccount(accounDto);
+	}
+	
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,55 @@
+package com.aurionpro.main.Service;
+
+import javax.security.auth.login.AccountNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aurionpro.main.Repository.AccountRepository;
+import com.aurionpro.main.Repository.TransactionRepository;
+import com.aurionpro.main.dto.AccountDto;
+import com.aurionpro.main.entity.Account;
+import com.aurionpro.main.entity.Transaction;
+import com.aurionpro.main.entity.TransactionType;
+import com.aurionpro.main.exception.InsufficientBalanceException;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class TransactionServiceImpl implements TransactionService{
+
+	@Autowired
+	private TransactionRepository transactionRepository;
+	
+	
+	@Autowired 
+	private AccountRepository accountRepo;
+	
+	
+	@Override
+	public Transaction performTransaction(long senderAccountNumber, long receiverAccountNumber,
+			TransactionType transactionType, int amount) {
+		// TODO Auto-generated method stub
+		return null; 
+	}
+	
+	@Transactional
+	public boolean withdrawAmount(long senderAccountNumber, long receiverAccountNumber,
+			TransactionType transactionType, int amount)
+	{     AccountServiceImpl accountServiceImpl = new AccountServiceImpl();
+		 
+		 Account fromAccount =  accountRepo.findById(senderAccountNumber)
+				 .orElseThrow(()-> new com.aurionpro.main.exception.AccountNotFoundException("Sender account is invalid."));
+		 
+		 if(fromAccount.getBalance()<amount)
+			 throw new InsufficientBalanceException("insufficient Balance.");
+		 
+		 fromAccount.setBalance(fromAccount.getBalance()-amount);
+		 Account updatedAccount = accountRepo.save(fromAccount);
+		 
+		 addTransaction( senderAccountNumber, receiverAccountNumber, transactionType, amount)
+		 
+		return true;
+	}
+
+}

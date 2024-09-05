@@ -1,0 +1,14 @@
+package com.aurionpro.main.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@Entity
+@Table(name="customers")
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class Customer {
+
+}

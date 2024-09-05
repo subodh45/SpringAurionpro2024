@@ -1,0 +1,153 @@
+package com.aurionpro.main.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import com.aurionpro.main.Repository.AccountRepository;
+import com.aurionpro.main.Repository.CustomerRepository;
+import com.aurionpro.main.Repository.TransactionRepository;
+import com.aurionpro.main.dto.AccountDto;
+import com.aurionpro.main.dto.PageResponseDto;
+import com.aurionpro.main.dto.TransactionDto;
+import com.aurionpro.main.entity.Account;
+import com.aurionpro.main.entity.Customer;
+import com.aurionpro.main.entity.Transaction;
+import com.aurionpro.main.exception.AccountNotFoundException;
+import com.aurionpro.main.exception.CustomerNotFoundException;
+
+@Service
+public class AccountServiceImpl implements AccountService {
+ 
+	@Autowired
+	private AccountRepository accountRepo;
+	
+	@Autowired 
+	private CustomerRepository customerRepo;
+	
+	@Autowired
+	private TransactionRepository  transactionRepo;
+	
+	TransactionServiceImpl transactionServiceImpl = new TransactionServiceImpl();
+	
+	@Override
+	public AccountDto addAccount(AccountDto accountDto) {
+		
+		 Customer customer = customerRepo.findById(accountDto.getCustomerId())
+		            .orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + accountDto.getCustomerId() + " not found"));
+		
+		  List<Account> existingAccount = customer.getAccounts();
+		  
+		  if(existingAccount == null)
+			  existingAccount = new ArrayList<>();
+		  
+		  Account account = toAccountMapper(accountDto);
+		  
+		 existingAccount.add(account);
+		 customer.setAccounts(existingAccount);
+		 customer =customerRepo.save(customer);
+	     account = accountRepo.save(account);
+	     
+	     
+		 return toAccountDtoMapper(account);
+		
+	}
+	
+	public Account toAccountMapper(AccountDto accountDto) {
+	    Account account = new Account();
+	    account.setAccountNumber(accountDto.getAccountNumber());
+	    account.setBalance(accountDto.getBalance());
+	    Customer customer = customerRepo.findById(accountDto.getCustomerId())
+	            .orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + accountDto.getCustomerId() + " not found"));
+	
+	    account.setCustomer(customer);
+	    
+	    return account;
+	}
+
+	public AccountDto toAccountDtoMapper(Account account) {
+		AccountDto accountDto = new AccountDto();
+		accountDto.setAccountNumber(account.getAccountNumber());
+		accountDto.setBalance(account.getBalance());
+		Customer customer = account.getCustomer();
+		accountDto.setCustomerId(customer.getCustomerId());
+		return accountDto;
+	}
+
+	@Override
+	public List<AccountDto> getAllAccounts() {
+		 List<Account> accounts = accountRepo.findAll();
+		    return accounts.stream()
+		                   .map(this::toAccountDtoMapper)
+		                   .collect(Collectors.toList());
+	}
+
+	@Override
+	public AccountDto getAccountbyAccountNumber(long accountNumber) {
+		 Account account = accountRepo.findById(accountNumber)
+		            .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
+		    return toAccountDtoMapper(account);
+	}
+
+	@Override
+	public List<TransactionDto> getAccountTransaction(long accountNumber) {
+		
+		Account account = accountRepo.findById(accountNumber)
+	            .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
+		 
+		List<Transaction> transactionList = account.getTransactions();
+		
+		
+		List<TransactionDto> transactionDtoList = new ArrayList<>();
+		
+		transactionList.forEach(transaction ->{
+			TransactionDto transactionDto= transactionServiceImpl.toTransactionDtoMapper(transaction);
+			 transactionDtoList.add(transactionDto);
+		});
+			
+		return transactionDtoList;
+	}
+
+	
+	//page
+	
+	
+	
+	@Override
+	public PageResponseDto<TransactionDto> getAllStudents(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		
+		Page<Student> studentPage = studentRepo.findAll(pageable);
+		
+		PageResponseDto<StudentDto>  pageResponseDto = new  PageResponseDto();
+		
+		Page<StudentDto> studentDtoPage = studentPage.map(this::studentDtoMapper);
+		
+		pageResponseDto.setPageNumber(studentDtoPage.getNumber());
+    	pageResponseDto.setContent(studentDtoPage.getContent());
+     	pageResponseDto.setPageSize(studentDtoPage.getSize());
+		
+		return pageResponseDto;
+	}
+	
+
+	@Override
+	public Page<TransactionDto> getAccountTransaction2(long accountNumber, int pageNumber, int pageSize) {
+		
+		Account account = accountRepo.findById(accountNumber).orElseThrow(() -> new AccountNotFoundException("account not found with number "+ accountNumber));
+		
+		Pageale pageable = PageRequest.of(pageNumber, pageSize);
+				
+		Page<Transaction> transactionPage = transactionRepo.findbyAccount(account, pageable);
+		
+		return null;
+	}
+
+}
+

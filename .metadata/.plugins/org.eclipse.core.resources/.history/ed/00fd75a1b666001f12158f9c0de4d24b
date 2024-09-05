@@ -1,0 +1,47 @@
+package com.aurionpro.main.security;
+
+
+
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+@Component
+public class JwtTokenProvider {
+
+	@Value("${app.jwt.secret}")
+	private String jwtSecret;
+	
+	@Value("${app-jwt-expiration-milliseconds}")
+	private long jwtExpirationDate;
+	
+	
+	public String generateToken(Authentication authentication)
+	{
+		String username= authentication.getUsername();
+		
+		Date currentDate = new Date();
+		
+		Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
+		
+		String token =  Jwts.builder().claims().subject(username).issuedAt(new Date(System.currentTimeMillis()))
+	            .expiration(expireDate).and().signWith(key())
+	            .claim("role", authentication.getAuthorities()).compact();
+
+			
+		return null;
+	}
+	
+	private SecretKey key() {
+	    
+	    return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+	  }
+}

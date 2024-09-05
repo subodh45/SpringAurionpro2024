@@ -1,0 +1,22 @@
+spring.application.name=P21-BankApp
+spring.datasource.url =jdbc:mysql://localhost:3306/bankbackendapp
+spring.datasource.username=root
+spring.datasource.password=root
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+app.jwt.secret=ySeYx/bWebOloP8HY6xTlcqRexEDFPaSjG/+mcaT6jk=
+app-jwt-expiration-milliseconds=604800000
+
+logging.level.org.hibernate.springframework= error
+logging.level.root =info
+
+logging.file.path=.
+
+logging.file.name=spring.log 
+logging.file.max-history=30
+logging.file.max-size=10MB 
+logging.spring.log.append=true
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE

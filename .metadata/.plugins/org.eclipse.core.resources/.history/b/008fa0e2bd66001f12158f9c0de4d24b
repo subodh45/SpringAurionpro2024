@@ -1,0 +1,8 @@
+package com.aurionpro.main.service;
+
+import com.aurionpro.main.dto.registrationdto;
+
+public interface AuthService {
+
+	User register(registrationdto registration);
+}

@@ -1,0 +1,41 @@
+package com.aurionpro.main.dto;
+
+import com.aurionpro.main.entity.Role;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Data
+public class registrationdto {
+    private String username;
+    private String password;
+    private String role;
+    
+    // Customer specific fields
+    private String firstName;
+    private String lastName;
+    private String email;
+    
+    // Admin specific fields
+    private String adminName;
+
+    // getters and setters
+}
+
+
+
+
+//@AllArgsConstructor
+//@RequiredArgsConstructor
+//@Data
+//public class registrationdto {
+//
+//	private String username;
+//	private String password;
+//	private String role;
+//	
+//}

@@ -1,0 +1,8 @@
+package com.aurionpro.main.security;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class JwtAuthenticationEntryPoint {
+
+}

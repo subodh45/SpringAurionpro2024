@@ -1,0 +1,13 @@
+package com.aurionpro.main.Service;
+
+import java.util.List;
+
+import com.aurionpro.main.dto.TransactionDto;
+import com.aurionpro.main.entity.Admin;
+
+public interface AdminService {
+
+	Admin addAdmin(String adminName, String password);
+	
+	List<TransactionDto> getAllTransaction();
+}

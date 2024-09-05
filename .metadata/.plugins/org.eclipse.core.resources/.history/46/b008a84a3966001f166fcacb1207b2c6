@@ -1,0 +1,10 @@
+package com.aurionpro.main.exception;
+
+public class AccountNotFoundException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
+
+    public CustomerNotFoundException(String message) {
+        super(message);
+    }
+}
